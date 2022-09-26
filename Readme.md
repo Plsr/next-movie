@@ -14,9 +14,9 @@ I work better when I write down what I have to do, so here is a very sophisticat
 
 ### Setup
 
-- [ ] Setup Next.js with Typescript
-- [ ] Setup eslint
-- [ ] Setup prettier
+- [x] Setup Next.js with Typescript
+- [x] Setup eslint
+- [x] Setup prettier
 - [ ] Add Tailwind CSS
 - [ ] Make first request using react-query
 - [ ] CI using Github Actions
