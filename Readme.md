@@ -19,8 +19,8 @@ I work better when I write down what I have to do, so here is a very sophisticat
 - [x] Setup prettier
 - [x] Add Tailwind CSS
 - [x] Make first request using react-query
-- [ ] CI using Github Actions
-- [ ] Deploy
+- [ ] ~~CI using Github Actions~~ (currently not needed, vercel takes care of that for now)
+- [x] Deploy
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
