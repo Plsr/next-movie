@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Header from '../components/header'
-import styles from '../styles/Home.module.css'
-import { useQuery } from '@tanstack/react-query'
+import ItemList from '../components/itemlist'
+import { useQuery, useQueries } from '@tanstack/react-query'
 
 const Home: NextPage = () => {
-  const fetchTopStories = async () => {
+  const fetchTopStories = async (): Promise<number[]> => {
     const res = await fetch(
       'https://hacker-news.firebaseio.com/v0/topstories.json'
     )
@@ -13,18 +13,30 @@ const Home: NextPage = () => {
     return data
   }
 
-  const { isLoading, isError, data, error } = useQuery(
-    ['topStories'],
-    fetchTopStories
-  )
+  const fetchItem = async (itemId: number) => {
+    const res = await fetch(
+      `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
+    )
+    const data = await res.json()
+    return data
+  }
 
-  if (isLoading) {
+  const {
+    isError: isTopStoriesError,
+    isLoading: isLoadingTopStories,
+    data: topStoryIds,
+    error: topStoriesError,
+  } = useQuery(['topStories'], fetchTopStories)
+
+  if (isLoadingTopStories) {
     return <p>Loading...</p>
   }
 
-  if (isError && error instanceof Error) {
-    return <p>{error.message}</p>
+  if (isTopStoriesError && topStoriesError instanceof Error) {
+    return <p>{topStoriesError.message}</p>
   }
+
+  console.log(topStoryIds)
 
   return (
     <div>
@@ -37,10 +49,8 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <div className="container mx-auto">
-          <h2>Latest top story ids</h2>
-          {data.slice(0, 10).map((d: number) => (
-            <p key={d}>{d}</p>
-          ))}
+          <h2 className="text-lg">Latest top story ids</h2>
+          <ItemList itemIds={topStoryIds!.slice(0, 10)} />
         </div>
       </main>
     </div>
