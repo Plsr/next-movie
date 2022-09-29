@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Header from '../components/header'
 import ItemList from '../components/itemlist'
 import { useQuery, useQueries } from '@tanstack/react-query'
+import { ItemInterface } from '../util/types'
 
 const Home: NextPage = () => {
   const fetchTopStories = async (): Promise<number[]> => {
@@ -13,12 +14,12 @@ const Home: NextPage = () => {
     return data
   }
 
-  const fetchItem = async (itemId: number) => {
+  const fetchItem = async (itemId: number): Promise<ItemInterface> => {
     const res = await fetch(
       `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
     )
     const data = await res.json()
-    return data
+    return data as ItemInterface
   }
 
   const {
@@ -37,7 +38,8 @@ const Home: NextPage = () => {
       })) || [],
   })
 
-  const allSuccess = storyData.every((story) => story.isSuccess === true)
+  const allSuccess =
+    storyData && storyData.every((story) => story.isSuccess === true)
   console.log(storyData)
 
   if (isLoadingTopStories || !allSuccess) {
@@ -61,7 +63,7 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <div className="container mx-auto">
-          <ItemList items={storyData.map((sd) => sd.data)} />
+          <ItemList items={storyData.map((sd) => sd.data!)} />
         </div>
       </main>
     </div>
@@ -69,9 +71,3 @@ const Home: NextPage = () => {
 }
 
 export default Home
-
-export interface ItemInterface {
-  title: string
-  id: string
-  score: number
-}
