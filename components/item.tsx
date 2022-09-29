@@ -5,8 +5,8 @@ export default function Item({ item }: props) {
   const host = new URL(item.url).hostname
   const date = formatDistance(fromUnixTime(item.time), new Date())
   return (
-    <div className="py-6 flex flex-row items-center">
-      <span className="pr-6">{item.score}</span>
+    <div className="py-8 flex flex-row items-center">
+      <span className="text-center pr-4 w-20">{item.score}</span>
       <div>
         <div className="mb-2">
           <span className="font-bold font-lg text-gray-700 mr-2">

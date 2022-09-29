@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Header from '../components/header'
+import SidebarContent from '../components/sidebar-content'
 import ItemList from '../components/itemlist'
 import { useQuery, useQueries } from '@tanstack/react-query'
 import { ItemInterface } from '../util/types'
@@ -61,9 +61,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Header />
-        <div className="container mx-auto">
-          <ItemList items={storyData.map((sd) => sd.data!)} />
+        <div className="flex h-screen">
+          <div className="sticky h-full bg-slate-100 w-60">
+            <SidebarContent />
+          </div>
+          <div className="h-full flex-1 px-8 overflow-scroll">
+            <ItemList items={storyData.map((sd) => sd.data!)} />
+          </div>
         </div>
       </main>
     </div>
