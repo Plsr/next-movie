@@ -3,25 +3,9 @@ import Head from 'next/head'
 import SidebarContent from '../components/sidebar-content'
 import ItemList from '../components/itemlist'
 import { useQuery, useQueries } from '@tanstack/react-query'
-import { ItemInterface } from '../util/types'
+import { fetchTopStories, fetchItem } from '../util/api'
 
 const Home: NextPage = () => {
-  const fetchTopStories = async (): Promise<number[]> => {
-    const res = await fetch(
-      'https://hacker-news.firebaseio.com/v0/topstories.json'
-    )
-    const data = await res.json()
-    return data
-  }
-
-  const fetchItem = async (itemId: number): Promise<ItemInterface> => {
-    const res = await fetch(
-      `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
-    )
-    const data = await res.json()
-    return data as ItemInterface
-  }
-
   const {
     isError: isTopStoriesError,
     isLoading: isLoadingTopStories,
@@ -40,17 +24,10 @@ const Home: NextPage = () => {
 
   const allSuccess =
     storyData && storyData.every((story) => story.isSuccess === true)
-  console.log(storyData)
-
-  if (isLoadingTopStories || !allSuccess) {
-    return <p>Loading...</p>
-  }
 
   if (isTopStoriesError && topStoriesError instanceof Error) {
     return <p>{topStoriesError.message}</p>
   }
-
-  console.log(topStoryIds)
 
   return (
     <div>
@@ -66,7 +43,8 @@ const Home: NextPage = () => {
             <SidebarContent />
           </div>
           <div className="h-full flex-1 px-8 overflow-scroll">
-            <ItemList items={storyData.map((sd) => sd.data!)} />
+            {!allSuccess && <p>Loading...</p>}
+            {allSuccess && <ItemList items={storyData.map((sd) => sd.data!)} />}
           </div>
         </div>
       </main>
