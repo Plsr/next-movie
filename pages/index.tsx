@@ -28,7 +28,19 @@ const Home: NextPage = () => {
     error: topStoriesError,
   } = useQuery(['topStories'], fetchTopStories)
 
-  if (isLoadingTopStories) {
+  const storyData = useQueries({
+    queries:
+      topStoryIds?.slice(0, 10)?.map((itemId) => ({
+        queryKey: ['item', itemId],
+        queryFn: () => fetchItem(itemId),
+        enabled: !!topStoryIds,
+      })) || [],
+  })
+
+  const allSuccess = storyData.every((story) => story.isSuccess === true)
+  console.log(storyData)
+
+  if (isLoadingTopStories || !allSuccess) {
     return <p>Loading...</p>
   }
 
@@ -49,8 +61,7 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <div className="container mx-auto">
-          <h2 className="text-lg">Latest top story ids</h2>
-          <ItemList itemIds={topStoryIds!.slice(0, 10)} />
+          <ItemList items={storyData.map((sd) => sd.data)} />
         </div>
       </main>
     </div>
@@ -58,3 +69,9 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export interface ItemInterface {
+  title: string
+  id: string
+  score: number
+}

@@ -1,39 +1,20 @@
-import { useQueries } from '@tanstack/react-query'
+import { ItemInterface } from '../pages'
 
-export default function ItemList({ itemIds }: props) {
-  const fetchItem = async (itemId: number) => {
-    const res = await fetch(
-      `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
-    )
-    const data = await res.json()
-    return data
-  }
-
-  const storyData = useQueries({
-    queries: itemIds.map((itemId) => ({
-      queryKey: ['item', itemId],
-      queryFn: () => fetchItem(itemId),
-    })),
-  })
-
-  const allSuccess = storyData.every((story) => story.isSuccess === true)
-
-  // TODO: Might be better to check for loading and then sort out the ones that might have errored
-  if (!allSuccess) {
-    return <p>Loading...</p>
-  }
-
-  console.log(storyData)
-
+export default function ItemList({ items }: props) {
   return (
-    <>
-      {storyData.map((story) => (
-        <p key={story.data.id}>{story.data.title}</p>
+    <div className="divide-y divide-slate-200 divide-solid">
+      {items.map((item) => (
+        <div key={item.id} className="py-6">
+          <p>
+            <span className="pr-2">({item.score})</span>
+            {item.title}
+          </p>
+        </div>
       ))}
-    </>
+    </div>
   )
 }
 
 interface props {
-  itemIds: number[]
+  items: ItemInterface[]
 }
