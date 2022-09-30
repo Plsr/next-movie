@@ -1,26 +1,25 @@
 import { ItemInterface } from '../util/types'
-import { formatDistance, fromUnixTime } from 'date-fns'
+import { createdAgo } from '../util/time'
+import Link from 'next/link'
+import ItemTitle from './item-title'
 
 export default function Item({ item }: props) {
-  const host = new URL(item.url).hostname
-  const date = formatDistance(fromUnixTime(item.time), new Date())
   return (
     <div className="py-8 flex flex-row items-center">
       <span className="text-center pr-4 w-20">{item.score}</span>
       <div>
         <div className="mb-2">
-          <span className="font-bold font-lg text-gray-700 mr-2">
-            {item.title}
-          </span>
-          <a href={item.url} className="text-gray-400 hover:underline">
-            ({host})
-          </a>
+          <ItemTitle id={item.id} title={item.title} url={item.url} linkable />
         </div>
         <div>
+          <Link href={'items/' + item.id}>
+            <a className="text-sm text-gray-500 mr-4">
+              {item.kids?.length || 0} comments
+            </a>
+          </Link>
           <span className="text-sm text-gray-500 mr-4">
-            {item.kids?.length || 0} comments
+            {createdAgo(item.time)}
           </span>
-          <span className="text-sm text-gray-500 mr-4">{date} ago</span>
           <span className="text-sm text-gray-500">by: {item.by}</span>
         </div>
       </div>

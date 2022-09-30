@@ -9,4 +9,5 @@ export interface ItemInterface {
   title: string
   type: string
   url: string
+  text: string
 }
