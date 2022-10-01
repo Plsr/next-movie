@@ -10,6 +10,9 @@ module.exports = {
       fontFamily: {
         sans: ['Lato', ...defaultTheme.fontFamily.sans],
       },
+      spacing: {
+        128: '36rem',
+      },
     },
   },
   plugins: [],

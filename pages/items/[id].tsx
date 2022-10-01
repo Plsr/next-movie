@@ -65,7 +65,7 @@ export default function Item({}) {
           <span>by {item.by}</span>
           <span> {createdAgo(item.time)}</span>
         </div>
-        <h2 className="text-md mt-3 font-bold">
+        <h2 className="text-md mt-12 mb-4 font-bold">
           Comments ({item.kids.length})
         </h2>
         {allCommentsSuccess &&

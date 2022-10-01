@@ -1,0 +1,11 @@
+.content {
+  line-height: 1.7;
+}
+
+.content a {
+  text-decoration: underline;
+}
+
+.content p {
+  margin-bottom: 1rem;
+}
