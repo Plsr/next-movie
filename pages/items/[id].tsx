@@ -49,6 +49,10 @@ export default function Item({}) {
         title={item.title}
         linkable={false}
       />
+      <div className="text-slate-500 text-xs">
+        <span>by {item.by}</span>
+        <span> {createdAgo(item.time)}</span>
+      </div>
       <h2 className="text-md mt-3 font-bold">Comments ({item.kids.length})</h2>
       {allCommentsSuccess &&
         commentData.map((comment) => (
