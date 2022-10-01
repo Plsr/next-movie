@@ -1,6 +1,7 @@
 import { ItemInterface } from '../util/types'
 import { createdAgo } from '../util/time'
 import styles from './comment.module.css'
+import CommentChildIndicator from './comment-child-indicator'
 
 export default function Comment({ comment }: props) {
   return (
@@ -12,7 +13,7 @@ export default function Comment({ comment }: props) {
         className={styles.content}
         dangerouslySetInnerHTML={{ __html: comment.text }}
       />
-      <span>{comment.kids?.length || 0} children</span>
+      <CommentChildIndicator childrenCount={comment.kids?.length || 0} />
     </div>
   )
 }
