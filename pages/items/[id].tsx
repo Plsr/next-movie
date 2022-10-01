@@ -4,6 +4,7 @@ import { fetchItem } from '../../util/api'
 import ItemTitle from '../../components/item-title'
 import { createdAgo } from '../../util/time'
 import Layout from '../../components/layout'
+import Comment from '../../components/comment'
 
 /** TODO:
  * - Move comment to distinct component
@@ -33,7 +34,10 @@ export default function Item({}) {
   })
 
   const allCommentsSuccess =
-    commentData && commentData.every((comment) => comment.isSuccess === true)
+    commentData &&
+    commentData.every(
+      (comment) => comment.isSuccess === true && comment.data != undefined
+    )
 
   if (isLoadingItem) {
     return (
@@ -66,13 +70,7 @@ export default function Item({}) {
         </h2>
         {allCommentsSuccess &&
           commentData.map((comment) => (
-            <div className="mb-4" key={comment.data!.id}>
-              <span className="text-sm text-slate-500">
-                {comment.data!.by} - {createdAgo(comment.data!.time)}
-              </span>
-              <p dangerouslySetInnerHTML={{ __html: comment.data!.text }} />
-              <span>{comment.data!.kids?.length || 0} children</span>
-            </div>
+            <Comment key={comment.data!.id} comment={comment.data!} />
           ))}
       </div>
     </Layout>
