@@ -1,10 +1,16 @@
 import { useRouter } from 'next/router'
-import { useQuery, useQueries } from '@tanstack/react-query'
+import {
+  useQuery,
+  useQueries,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query'
 import { fetchItem } from '../../util/api'
 import ItemTitle from '../../components/item-title'
 import { createdAgo } from '../../util/time'
 import Layout from '../../components/layout'
 import Comment from '../../components/comment'
+import { ItemInterface } from '../../util/types'
 
 /** TODO:
  * - Move comment to distinct component
@@ -24,7 +30,7 @@ export default function Item({}) {
     data: item,
   } = useQuery(['item', itemId], () => fetchItem(+itemId!))
 
-  const commentData = useQueries({
+  const commentsQueryResults = useQueries({
     queries:
       item?.kids?.map((itemId) => ({
         queryKey: ['item', itemId],
@@ -33,11 +39,13 @@ export default function Item({}) {
       })) || [],
   })
 
-  const allCommentsSuccess =
-    commentData &&
-    commentData.every(
-      (comment) => comment.isSuccess === true && comment.data != undefined
-    )
+  const commentsData = commentsQueryResults
+    .filter(({ data: commentData }) => commentData != undefined)
+    .map((r) => r.data as ItemInterface)
+
+  const aliveComments = (comments: ItemInterface[]): ItemInterface[] => {
+    return comments.filter((comment) => !comment.dead)
+  }
 
   if (isLoadingItem) {
     return (
@@ -68,9 +76,9 @@ export default function Item({}) {
         <h2 className="text-md mt-12 mb-4 font-bold">
           Comments ({item.kids.length})
         </h2>
-        {allCommentsSuccess &&
-          commentData.map((comment) => (
-            <Comment key={comment.data!.id} comment={comment.data!} />
+        {commentsData &&
+          aliveComments(commentsData).map((comment) => (
+            <Comment key={comment.id} comment={comment} />
           ))}
       </div>
     </Layout>

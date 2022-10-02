@@ -10,4 +10,5 @@ export interface ItemInterface {
   type: string
   url: string
   text: string
+  dead?: boolean
 }
