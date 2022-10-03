@@ -1,10 +1,5 @@
 import { useRouter } from 'next/router'
-import {
-  useQuery,
-  useQueries,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query'
+import { useQuery, useQueries } from '@tanstack/react-query'
 import { fetchItem } from '../../util/api'
 import ItemTitle from '../../components/item-title'
 import { createdAgo } from '../../util/time'

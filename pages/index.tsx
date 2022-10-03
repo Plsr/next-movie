@@ -1,6 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import SidebarContent from '../components/sidebar-content'
 import ItemList from '../components/itemlist'
 import { useQuery, useQueries } from '@tanstack/react-query'
 import { fetchTopStories, fetchItem } from '../util/api'

@@ -1,10 +1,13 @@
-export default function CommentChildIndicator({ childrenCount }: props) {
+export default function CommentChildIndicator({
+  childrenCount,
+  onClick,
+}: props) {
   if (childrenCount === 0) return null
 
   const childrenString = childrenCount > 1 ? 'children' : 'child'
 
   return (
-    <span>
+    <span className="cursor-pointer" onClick={onClick}>
       {childrenCount} {childrenString}
     </span>
   )
@@ -12,4 +15,5 @@ export default function CommentChildIndicator({ childrenCount }: props) {
 
 interface props {
   childrenCount: number
+  onClick: () => void
 }
