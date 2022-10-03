@@ -1,19 +1,11 @@
 import { useRouter } from 'next/router'
-import { useQuery, useQueries } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { fetchItem } from '../../util/api'
 import ItemTitle from '../../components/item-title'
 import { createdAgo } from '../../util/time'
 import Layout from '../../components/layout'
-import Comment from '../../components/comment'
-import { ItemInterface } from '../../util/types'
+import CommentTree from '../../components/comment-tree'
 
-/** TODO:
- * - Move comment to distinct component
- * - Plural/Singular for children
- * - Hide children thing if no children present
- * - Hide 'dead' comments
- * - Load children on click
- */
 export default function Item({}) {
   const router = useRouter()
   const { id: itemId } = router.query
@@ -24,23 +16,6 @@ export default function Item({}) {
     error,
     data: item,
   } = useQuery(['item', itemId], () => fetchItem(+itemId!))
-
-  const commentsQueryResults = useQueries({
-    queries:
-      item?.kids?.map((itemId) => ({
-        queryKey: ['item', itemId],
-        queryFn: () => fetchItem(itemId),
-        enabled: !!item,
-      })) || [],
-  })
-
-  const commentsData = commentsQueryResults
-    .filter(({ data: commentData }) => commentData != undefined)
-    .map((r) => r.data as ItemInterface)
-
-  const aliveComments = (comments: ItemInterface[]): ItemInterface[] => {
-    return comments.filter((comment) => !comment.dead)
-  }
 
   if (isLoadingItem) {
     return (
@@ -71,10 +46,9 @@ export default function Item({}) {
         <h2 className="text-md mt-12 mb-4 font-bold">
           Comments ({item.kids.length})
         </h2>
-        {commentsData &&
-          aliveComments(commentsData).map((comment) => (
-            <Comment key={comment.id} comment={comment} />
-          ))}
+        {item.kids?.map((comment) => (
+          <CommentTree key={comment} id={comment} />
+        ))}
       </div>
     </Layout>
   )

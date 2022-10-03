@@ -14,7 +14,7 @@ export default function Item({ item }: props) {
         <div>
           <Link href={'items/' + item.id}>
             <a className="text-sm text-gray-500 mr-4">
-              {item.kids?.length || 0} comments
+              {item.descendants || 0} comments
             </a>
           </Link>
           <span className="text-sm text-gray-500 mr-4">
