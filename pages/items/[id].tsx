@@ -30,8 +30,6 @@ export default function Item({}) {
     return <p>Something went wrong</p>
   }
 
-  console.log(item.kids)
-
   return (
     <Layout>
       <div className="p-2">

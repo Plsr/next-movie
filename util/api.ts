@@ -13,7 +13,6 @@ export const fetchItem = async (itemId: number): Promise<ItemInterface> => {
     `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
   )
   const data = await res.json()
-  console.log(data)
   return data as ItemInterface
 }
 
