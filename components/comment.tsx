@@ -2,7 +2,7 @@ import { ItemInterface } from '../util/types'
 import { createdAgo } from '../util/time'
 import styles from './comment.module.css'
 
-export default function Comment({ comment, onLoadChildren, leftPad }: props) {
+export default function Comment({ comment, leftPad }: props) {
   return (
     <div
       style={{
@@ -24,6 +24,5 @@ export default function Comment({ comment, onLoadChildren, leftPad }: props) {
 
 interface props {
   comment: ItemInterface
-  onLoadChildren: (parentId: number) => void
   leftPad: number
 }

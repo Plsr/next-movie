@@ -44,7 +44,7 @@ export default function Item({}) {
           <span> {createdAgo(item.time)}</span>
         </div>
         <h2 className="text-md mt-12 mb-4 font-bold">
-          Comments ({item.kids.length})
+          Comments ({item.descendants})
         </h2>
         {item.kids?.map((comment) => (
           <CommentTree key={comment} id={comment} />
