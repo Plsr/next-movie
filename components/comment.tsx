@@ -1,8 +1,9 @@
 import { ItemInterface } from '../util/types'
 import { createdAgo } from '../util/time'
 import styles from './comment.module.css'
+import CommentHeader from './comment-header'
 
-export default function Comment({ comment, leftPad }: props) {
+export default function Comment({ comment, leftPad, onCollapseClick }: props) {
   return (
     <div
       style={{
@@ -11,9 +12,12 @@ export default function Comment({ comment, leftPad }: props) {
       className="mb-12 w-128"
       key={comment.id}
     >
-      <span className="text-sm text-slate-500">
-        {comment.by} - {createdAgo(comment.time)}
-      </span>
+      <CommentHeader
+        username={comment.by}
+        createdAtEpoch={comment.time}
+        isCollapsed={false}
+        onCollapseClick={onCollapseClick}
+      />
       <p
         className={styles.content}
         dangerouslySetInnerHTML={{ __html: comment.text }}
@@ -25,4 +29,5 @@ export default function Comment({ comment, leftPad }: props) {
 interface props {
   comment: ItemInterface
   leftPad: number
+  onCollapseClick?: () => void
 }
