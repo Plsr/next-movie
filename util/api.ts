@@ -1,9 +1,19 @@
 import { ItemInterface } from './types'
 
 export const fetchTopStories = async (): Promise<number[]> => {
-  const res = await fetch(
-    'https://hacker-news.firebaseio.com/v0/topstories.json'
-  )
+  return fetchStories('topstories')
+}
+
+export const fetchNewStories = async (): Promise<number[]> => {
+  return fetchStories('newstories')
+}
+
+export const fetchAskStories = async (): Promise<number[]> => {
+  return fetchStories('askstories')
+}
+
+const fetchStories = async (route: string): Promise<number[]> => {
+  const res = await fetch(`https://hacker-news.firebaseio.com/v0/${route}.json`)
   const data = await res.json()
   return data
 }

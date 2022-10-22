@@ -1,41 +1,9 @@
 import type { NextPage } from 'next'
-import ItemList from '../components/itemlist'
-import { useQuery, useQueries } from '@tanstack/react-query'
-import { fetchTopStories, fetchItem } from '../util/api'
-import Layout from '../components/layout'
+import CategoryPage from '../components/category-page'
+import { fetchTopStories } from '../util/api'
 
 const Home: NextPage = () => {
-  const {
-    isError: isTopStoriesError,
-    isLoading: isLoadingTopStories,
-    data: topStoryIds,
-    error: topStoriesError,
-  } = useQuery(['topStories'], fetchTopStories)
-
-  const storyData = useQueries({
-    queries:
-      topStoryIds?.slice(0, 10)?.map((itemId) => ({
-        queryKey: ['item', itemId],
-        queryFn: () => fetchItem(itemId),
-        enabled: !!topStoryIds,
-      })) || [],
-  })
-
-  const allSuccess =
-    storyData && storyData.every((story) => story.isSuccess === true)
-
-  if (isTopStoriesError && topStoriesError instanceof Error) {
-    return <p>{topStoriesError.message}</p>
-  }
-
-  return (
-    <Layout>
-      <>
-        {!allSuccess && <p>Loading...</p>}
-        {allSuccess && <ItemList items={storyData.map((sd) => sd.data!)} />}
-      </>
-    </Layout>
-  )
+  return <CategoryPage fetchFunction={fetchTopStories} />
 }
 
 export default Home
