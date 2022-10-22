@@ -43,6 +43,12 @@ export default function Item({}) {
           <span>by {item.by}</span>
           <span> {createdAgo(item.time)}</span>
         </div>
+        {item.text && (
+          <div
+            className="mt-2 w-128"
+            dangerouslySetInnerHTML={{ __html: item.text }}
+          />
+        )}
         <h2 className="text-md mt-12 mb-4 font-bold">
           Comments ({item.descendants})
         </h2>
