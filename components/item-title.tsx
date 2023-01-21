@@ -7,8 +7,8 @@ export default function ItemTitle({ id, title, url, linkable = false }: props) {
   return (
     <>
       {linkable && (
-        <Link href={'items/' + id}>
-          <a className={titleClasses}>{title}</a>
+        <Link href={'items/' + id} className={titleClasses}>
+          {title}
         </Link>
       )}
       {!linkable && <span className={titleClasses}>{title}</span>}

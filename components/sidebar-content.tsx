@@ -22,18 +22,18 @@ export default function SidebarContent() {
               (activeLink('/') || activeLink('/top')) && activeStyles
             )}
           >
-            <Link href="/">
-              <a className="block">Top</a>
+            <Link href="/" className="block">
+              Top
             </Link>
           </li>
           <li className={clsx(baseStyles, activeLink('/new') && activeStyles)}>
-            <Link href="/new">
-              <a className="block">New</a>
+            <Link href="/new" className="block">
+              New
             </Link>
           </li>
           <li className={clsx(baseStyles, activeLink('/ask') && activeStyles)}>
-            <Link href="/ask">
-              <a className="block">Ask</a>
+            <Link href="/ask" className="block">
+              Ask
             </Link>
           </li>
         </ul>
