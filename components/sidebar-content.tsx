@@ -1,12 +1,14 @@
+'use client'
+
 import { clsx } from 'clsx'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 export default function SidebarContent() {
-  const router = useRouter()
+  const pathname = usePathname()
 
   // HACK: Move all of this into a component
-  const activeLink = (path: string) => router.pathname === path
+  const activeLink = (path: string) => pathname === path
   const baseStyles = 'mt-2 p-2 flex-1 text-sm'
   const activeStyles =
     'bg-orange-200 text-orange-800 font-bold text-sm rounded-lg'
@@ -22,18 +24,18 @@ export default function SidebarContent() {
               (activeLink('/') || activeLink('/top')) && activeStyles
             )}
           >
-            <Link href="/">
-              <a className="block">Top</a>
+            <Link href="/top" className="block">
+              Top
             </Link>
           </li>
           <li className={clsx(baseStyles, activeLink('/new') && activeStyles)}>
-            <Link href="/new">
-              <a className="block">New</a>
+            <Link href="/new" className="block">
+              New
             </Link>
           </li>
           <li className={clsx(baseStyles, activeLink('/ask') && activeStyles)}>
-            <Link href="/ask">
-              <a className="block">Ask</a>
+            <Link href="/ask" className="block">
+              Ask
             </Link>
           </li>
         </ul>

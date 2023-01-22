@@ -12,10 +12,11 @@ export default function Item({ item }: props) {
           <ItemTitle id={item.id} title={item.title} url={item.url} linkable />
         </div>
         <div>
-          <Link href={'items/' + item.id}>
-            <a className="text-sm text-gray-500 mr-4">
-              {item.descendants || 0} comments
-            </a>
+          <Link
+            href={'items/' + item.id}
+            className="text-sm text-gray-500 mr-4"
+          >
+            {item.descendants || 0} comments
           </Link>
           <span className="text-sm text-gray-500 mr-4">
             {createdAgo(item.time)}
