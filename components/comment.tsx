@@ -18,7 +18,7 @@ export default function Comment({ comment, leftPad, onCollapseClick }: props) {
         isCollapsed={false}
         onCollapseClick={onCollapseClick}
       />
-      <p
+      <div
         className={styles.content}
         dangerouslySetInnerHTML={{ __html: comment.text }}
       />

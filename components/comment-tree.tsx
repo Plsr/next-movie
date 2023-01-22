@@ -1,18 +1,24 @@
-import { useQuery } from '@tanstack/react-query'
-import { fetchCommentTree, fetchItem } from '../util/api'
+import { fetchCommentTree } from '../util/api'
 import CommentWithChildren from './comment-with-children'
 
-export default function CommentTree({ id, depth = 0 }: props) {
-  const { data: commentTree, isLoading } = useQuery(['comment-tree', id], () =>
-    fetchCommentTree(id)
+export default async function CommentTree({ itemId, depth = 0 }: props) {
+  const commentTree = await fetchCommentTree(itemId)
+
+  return (
+    <>
+      {commentTree &&
+        commentTree.children?.map((childComment) => (
+          <CommentWithChildren
+            key={childComment.id}
+            comment={childComment}
+            level={0}
+          />
+        ))}
+    </>
   )
-
-  if (isLoading || !commentTree) return <p>Loading comment...</p>
-
-  return <CommentWithChildren comment={commentTree} level={0} />
 }
 
 interface props {
-  id: number
   depth?: number
+  itemId: number
 }

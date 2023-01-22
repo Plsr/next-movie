@@ -6,6 +6,8 @@ type RootLayoutProps = {
   children: ReactNode
 }
 
+export const revalidate = 60
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useMemo } from 'react'
 import { ICommentWithChildren } from '../util/api'
 import Comment from './comment'
