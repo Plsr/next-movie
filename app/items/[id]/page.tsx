@@ -1,9 +1,7 @@
+import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import CommentTree from '../../../components/comment-tree'
-import { ItemSingle } from './item-single'
-import ItemTitle from '../../../components/item-title'
-import { fetchCommentTree, fetchItem } from '../../../util/api'
-import { createdAgo } from '../../../util/time'
+import { ItemSingle } from '../../../components/item-single'
 
 type ItemPageProps = {
   params: {
@@ -12,7 +10,9 @@ type ItemPageProps = {
 }
 
 export default async function ItemPage({ params }: ItemPageProps) {
-  const itemId = +params.id
+  const itemId = +params?.id
+
+  if (!itemId) notFound()
 
   return (
     <div className="p-2">

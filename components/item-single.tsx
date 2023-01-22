@@ -1,6 +1,6 @@
-import { fetchItem } from '../../../util/api'
-import { createdAgo } from '../../../util/time'
-import ItemTitle from '../../../components/item-title'
+import { fetchItem } from '../util/api'
+import { createdAgo } from '../util/time'
+import ItemTitle from './item-title'
 
 type ItemSingleProps = {
   itemId: number
