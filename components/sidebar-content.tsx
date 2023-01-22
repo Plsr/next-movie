@@ -24,7 +24,7 @@ export default function SidebarContent() {
               (activeLink('/') || activeLink('/top')) && activeStyles
             )}
           >
-            <Link href="/" className="block">
+            <Link href="/top" className="block">
               Top
             </Link>
           </li>
