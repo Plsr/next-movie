@@ -24,6 +24,11 @@ export const fetchStories = async (route: string): Promise<number[]> => {
   return data
 }
 
+export const fetchItems = async (storyIds: number[]) => {
+  const storyFetches = storyIds.map((storyId) => fetchItem(storyId))
+  return Promise.all(storyFetches)
+}
+
 export const fetchItem = async (itemId: number): Promise<ItemInterface> => {
   const res = await fetch(
     `https://hacker-news.firebaseio.com/v0/item/${itemId}.json`
